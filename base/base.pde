@@ -1,27 +1,5 @@
 import controlP5.*;
 
-// Assets needed:
-//
-// Background
-// House (w/ blank name plaque)
-// Scorched house
-// Town sign
-// Scorched town sign
-// Mailbox
-// Scorched mailbox
-// Shrubs (2 variants)
-// Young trees (2 variants)
-// Taller trees (2 variants)
-// Grown trees (2 variants)
-// Scorched trees (2 variants)
-// Birds n shit 
-// Dialogue boxes, buttons, 
-//
-//
-// Placeholders are viable for now
-// Functionality over trim
-//
-//170, 205, 245
 
 ControlP5 cp5;
 
@@ -63,8 +41,18 @@ void draw() {
   
 }
 
+// ---!---!---!---!---!---!---!---!---!---!---!---!---! SAVE PLAYER NAME ---!---!---!---!---!---!---!---!---!---!---!
+
 void SavePlayerName(){
+  
+  //Saving player name
   playername = cp5.get(Textfield.class, "nameinput").getText();
-  print(playername);
-   
+  
+  //ACTIONS TRIGGERED BY SUBMITTING NAME:
+  
+  //Hide text field and submit button
+  cp5.hide();
+  
+  //Place initial assets
+  //--here--
 }
