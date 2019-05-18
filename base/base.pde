@@ -5,6 +5,11 @@ ControlP5 cp5;
 
 // --- PROJECT FONTS
 
+
+// --- TIMER VARIABLES
+float lasttimecheck;
+float timeinterval;
+
 // --- PLAYER NAME
 String playername;
 
@@ -38,6 +43,7 @@ String dial1 = "After almost a decade, you come back to visit your old childhood
 void setup(){
   size(1920, 1080);
   smooth(8);
+
   
   // --- LOAD ASSET IMAGES INTO VARIABLES
   truck = loadImage("truck.png");
@@ -89,6 +95,7 @@ void SavePlayerName(){
     
     //Start drawing stage #0
     stage0 = true;
+    lasttimecheck = millis();
 
   }
 
@@ -116,18 +123,18 @@ void draw() {
     // TRUCK
     image(truck, truckX, truckY);
     
-    if(!truckGone){
-      delay(1000);
+    if(millis() > lasttimecheck + 3000){
       truckGone = true;
     }
     
     if(truckGone){
       truckX += truckPace;
       truckPace += truckPace/24;
+      print(millis());
+      print("\n");
     }
-   
-    
+
+
+
   }
-  
-  
 }
