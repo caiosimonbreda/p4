@@ -35,8 +35,8 @@ PImage daysky;
 PImage ground1, ground2, ground3;
 
 // --- DIALOGUE AND OTHER STRING VARIABLES
-String dial1 = "After almost a decade, you come back to visit your old childhood home; only to find it in a dreadful condition - cracked walls, broken roof tiles and rotting door frames: In order to be able to afford the costs of restoring it, you decided on selling all of that timber growing around your land. ";
-
+String backstory = "After almost a decade, you come back to visit your old childhood home; only to find it in a dreadful condition - cracked walls, broken roof tiles and rotting door frames.";
+String backstory2 = "In order to be able to afford the costs of restoring it, you decided on selling all of that timber growing around your land.";
 
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! SETUP  ---!---!---!---!---!---!---!---!---!---!---!---!---!
@@ -105,9 +105,10 @@ void SavePlayerName(){
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! DRAW  ---!---!---!---!---!---!---!---!---!---!---!---!---!
 
 void draw() {
-  //image(madlad, 0, 0);
+  // --- DRAW BACKGROUND
   background(daysky);
   
+  // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ZERO  ---!---!---!---!---!---!---!---!---!---!---!---!---! 0
   if(stage0){
     // GROUND
     image(ground3, -1, 590);
@@ -116,7 +117,17 @@ void draw() {
     
     // TEXT - BACKSTORY
     textFont(createFont("arial",24));
-    text(dial1, 845, 700, 400, 200);
+    
+    text(backstory, 845, 700, 400, 200);
+    
+    int clickCounter = 0;
+    if((mouseX >= 845 && mouseX <= 1245 && mouseY >= 700 && mouseY <= 900) && mousePressed){
+      clickCounter++;
+    }
+    
+    if(clickCounter == 1){
+      backstory = backstory2;
+    }
     
     // !--- FOREGROUND ---!
     
@@ -127,14 +138,16 @@ void draw() {
       truckGone = true;
     }
     
-    if(truckGone){
+    if(truckGone && (truckX <= 1920)){
       truckX += truckPace;
       truckPace += truckPace/24;
-      print(millis());
       print("\n");
     }
-
-
-
   }
+  
+  // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ONE  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
+  if(stage1){
+    //draw stage one 
+  }
+  
 }
