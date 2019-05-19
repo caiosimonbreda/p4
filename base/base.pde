@@ -118,7 +118,7 @@ void draw() {
     image(ground3, -1, 590);
     image(ground2, -1, 880);
     image(cabin, 30, 570);
-    image(townsign, 1000, 700);
+    image(townsign, 1700, 900);
     image(ground1, -1, 925);
 
     
