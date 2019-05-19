@@ -187,6 +187,7 @@ void mouseClicked(){
   if(clickCounter >= 2){
     stage0 = false;
     stage1 = true;
+    //HOW ABOUT RESETTING THE CLICK COUNTER EVERY TIME WE CHANGE STAGE?
   }
   
 }
