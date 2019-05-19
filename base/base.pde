@@ -31,10 +31,16 @@ Float truckPace = 1.0;
 Boolean truckGo = false;
 Boolean truckGone = false;
 
+PImage officer;
+Float officerX = 650.0;
+Float officerY = 1100.0;
+
 PImage daysky;
 PImage ground1, ground2, ground3;
 PImage cabin;
 PImage townsign;
+
+int clickCounter;
 
 // --- DIALOGUE AND OTHER STRING VARIABLES
 String backstory = "After almost a decade, you come back to visit your old childhood home; only to find it in a dreadful condition - cracked walls, broken roof tiles and rotting door frames.";
@@ -45,7 +51,7 @@ String backstory2 = "In order to be able to afford the costs of restoring it, yo
 void setup(){
   size(1920, 1080);
   smooth(8);
-
+  clickCounter = 0;
   
   // --- LOAD ASSET IMAGES INTO VARIABLES
   truck = loadImage("truck.png");
@@ -55,6 +61,7 @@ void setup(){
   ground1 = loadImage("plano1.png");
   ground2 = loadImage("plano2.png");
   ground3 = loadImage("plano3.png");
+  officer = loadImage("officer.png");
   
   // --- CtrlP5 INITIALIZATION
   cp5 = new ControlP5(this);
@@ -127,7 +134,7 @@ void draw() {
     
     text(backstory, 845, 700, 400, 200);
     
-    int clickCounter = 0;
+    
     if((mouseX >= 845 && mouseX <= 1245 && mouseY >= 700 && mouseY <= 900) && mousePressed){
       clickCounter++;
     }
@@ -148,6 +155,15 @@ void draw() {
     if(truckGone && (truckX <= 1920)){
       truckX += truckPace;
       truckPace += truckPace/24;
+    }
+    
+    // OFFICER
+    image(officer, officerX, officerY);
+    
+    if(clickCounter >= 2){
+      if(officerY >= 800){
+        officerY -= 6;        
+      }
     }
   }
   
