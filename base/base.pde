@@ -34,6 +34,8 @@ Boolean truckGone = false;
 PImage officer;
 Float officerX = 650.0;
 Float officerY = 1100.0;
+Boolean officerCome = false;
+Boolean officerGo = false;
 
 PImage daysky;
 PImage ground1, ground2, ground3;
@@ -134,11 +136,6 @@ void draw() {
     
     text(backstory, 845, 700, 400, 200);
     
-    
-    if((mouseX >= 845 && mouseX <= 1245 && mouseY >= 700 && mouseY <= 900) && mousePressed){
-      clickCounter++;
-    }
-    
     if(clickCounter == 1){
       backstory = backstory2;
     }
@@ -149,27 +146,47 @@ void draw() {
     image(truck, truckX, truckY);
     
     if(millis() > lasttimecheck + 3000){
-      truckGone = true;
+      truckGo = true;
     }
     
-    if(truckGone && (truckX <= 1920)){
+    if(truckGo && (truckX <= 1920)){
       truckX += truckPace;
       truckPace += truckPace/24;
     }
     
-    // OFFICER
-    image(officer, officerX, officerY);
-    
-    if(clickCounter >= 2){
-      if(officerY >= 800){
-        officerY -= 6;        
-      }
-    }
+
   }
   
   // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ONE  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
   if(stage1){
-    //draw stage one 
+    
+    
+    
+    
+    // OFFICER
+    image(officer, officerX, officerY);
+    
+    print(clickCounter + "\n");
+    
+
+    if(officerY >= 800){
+      officerY -= 6;        
+    }
+ 
+  } //end of stage 1
+  
+}
+
+// ---!---!---!---!---!---!---!---!---!---!---!---!---!---!---!---! MOUSE CLICKED  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
+void mouseClicked(){
+  
+  if(stage0 && (mouseX >= 845 && mouseX <= 1245 && mouseY >= 700 && mouseY <= 900)){
+    clickCounter++;
+  }
+  
+  if(clickCounter >= 2){
+    stage0 = false;
+    stage1 = true;
   }
   
 }
