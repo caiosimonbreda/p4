@@ -3,6 +3,9 @@ import controlP5.*;
 // --- INITIALIZE CONTROLP5 VARIABLE FOR INITIAL FORM
 ControlP5 cp5;
 
+// PROJECT-WIDE CLICK COUNTER (RESET AT EACH STAGE)
+int clickCounter;
+
 // --- PROJECT FONTS
 
 
@@ -31,6 +34,7 @@ Float truckPace = 1.0;
 Boolean truckGo = false;
 Boolean truckGone = false;
 
+
 PImage officer;
 Float officerX = 650.0;
 Float officerY = 1100.0;
@@ -41,12 +45,13 @@ PImage daysky;
 PImage ground1, ground2, ground3;
 PImage cabin;
 PImage townsign;
+PImage next;
 
-int clickCounter;
+
 
 // --- DIALOGUE AND OTHER STRING VARIABLES
-String backstory = "After almost a decade, you come back to visit your old childhood home; only to find it in a dreadful condition - cracked walls, broken roof tiles and rotting door frames.";
-String backstory2 = "In order to be able to afford the costs of restoring it, you decided on selling all of that timber growing around your land.";
+int dialogueOpacity;
+PImage backstory;
 
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! SETUP  ---!---!---!---!---!---!---!---!---!---!---!---!---!
@@ -54,6 +59,7 @@ void setup(){
   size(1920, 1080);
   smooth(8);
   clickCounter = 0;
+  dialogueOpacity = 0;
   
   // --- LOAD ASSET IMAGES INTO VARIABLES
   truck = loadImage("truck.png");
@@ -64,6 +70,8 @@ void setup(){
   ground2 = loadImage("plano2.png");
   ground3 = loadImage("plano3.png");
   officer = loadImage("officer.png");
+  backstory = loadImage("backstory.png");
+  next = loadImage("next.png");
   
   // --- CtrlP5 INITIALIZATION
   cp5 = new ControlP5(this);
@@ -132,13 +140,13 @@ void draw() {
 
     
     // TEXT - BACKSTORY
-    textFont(createFont("arial",24));
+    //textFont(createFont("arial",24));
+    tint(255, dialogueOpacity);
     
-    text(backstory, 845, 700, 400, 200);
+    image(backstory, 570, 200);
+    image(next, 1220, 430);
     
-    if(clickCounter == 1){
-      backstory = backstory2;
-    }
+    tint(255, 255);
     
     // !--- FOREGROUND ---!
     
@@ -152,14 +160,20 @@ void draw() {
     if(truckGo && (truckX <= 1920)){
       truckX += truckPace;
       truckPace += truckPace/24;
+      if(dialogueOpacity <= 255){
+        dialogueOpacity += 5;
+      }
     }
-    
-
   }
   
   // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ONE  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
   if(stage1){
-    
+    // GROUND & STATIC ASSETS
+    image(ground3, -1, 590);
+    image(ground2, -1, 880);
+    image(cabin, 30, 570);
+    image(townsign, 1700, 900);
+    image(ground1, -1, 925);
     
     
     
@@ -180,14 +194,14 @@ void draw() {
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---!---!---! MOUSE CLICKED  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
 void mouseClicked(){
   
-  if(stage0 && (mouseX >= 845 && mouseX <= 1245 && mouseY >= 700 && mouseY <= 900)){
+  if(stage0 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 430 && mouseY <= 490)){
     clickCounter++;
   }
   
-  if(clickCounter >= 2){
+  if(clickCounter >= 1){
     stage0 = false;
     stage1 = true;
-    //HOW ABOUT RESETTING THE CLICK COUNTER EVERY TIME WE CHANGE STAGE?
+    clickCounter = 0;
   }
   
 }
