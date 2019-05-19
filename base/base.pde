@@ -33,6 +33,8 @@ Boolean truckGone = false;
 
 PImage daysky;
 PImage ground1, ground2, ground3;
+PImage cabin;
+PImage townsign;
 
 // --- DIALOGUE AND OTHER STRING VARIABLES
 String backstory = "After almost a decade, you come back to visit your old childhood home; only to find it in a dreadful condition - cracked walls, broken roof tiles and rotting door frames.";
@@ -48,6 +50,8 @@ void setup(){
   // --- LOAD ASSET IMAGES INTO VARIABLES
   truck = loadImage("truck.png");
   daysky = loadImage("sky.png");
+  cabin = loadImage("cabin.png");
+  townsign = loadImage("townsign.png");
   ground1 = loadImage("plano1.png");
   ground2 = loadImage("plano2.png");
   ground3 = loadImage("plano3.png");
@@ -110,10 +114,13 @@ void draw() {
   
   // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ZERO  ---!---!---!---!---!---!---!---!---!---!---!---!---! 0
   if(stage0){
-    // GROUND
+    // GROUND & STATIC ASSETS
     image(ground3, -1, 590);
     image(ground2, -1, 880);
+    image(cabin, 30, 570);
+    image(townsign, 1000, 700);
     image(ground1, -1, 925);
+
     
     // TEXT - BACKSTORY
     textFont(createFont("arial",24));
@@ -141,7 +148,6 @@ void draw() {
     if(truckGone && (truckX <= 1920)){
       truckX += truckPace;
       truckPace += truckPace/24;
-      print("\n");
     }
   }
   
