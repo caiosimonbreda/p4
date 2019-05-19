@@ -49,9 +49,13 @@ PImage next;
 
 
 
-// --- DIALOGUE AND OTHER STRING VARIABLES
+// --- DIALOGUE AND OTHER TEXT-RELATED VARIABLES
 int dialogueOpacity;
+PImage buffer;
 PImage backstory;
+PImage dial1;
+PImage dial2;
+PImage treechoice;
 
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! SETUP  ---!---!---!---!---!---!---!---!---!---!---!---!---!
@@ -72,6 +76,9 @@ void setup(){
   officer = loadImage("officer.png");
   backstory = loadImage("backstory.png");
   next = loadImage("next.png");
+  dial1 = loadImage("dial1.png");
+  dial2 = loadImage("dial2.png");
+  treechoice = loadImage("treechoice.png");
   
   // --- CtrlP5 INITIALIZATION
   cp5 = new ControlP5(this);
@@ -153,7 +160,7 @@ void draw() {
     // TRUCK
     image(truck, truckX, truckY);
     
-    if(millis() > lasttimecheck + 3000){
+    if(millis() > lasttimecheck + 1000){
       truckGo = true;
     }
     
@@ -186,6 +193,46 @@ void draw() {
     if(officerY >= 800){
       officerY -= 6;        
     }
+    if(officerY <= 800){
+      
+      if(clickCounter == 0){
+        buffer = dial1;
+      } else if (clickCounter == 1){
+        buffer = dial2;
+      }
+      
+      if(clickCounter <= 2){
+        tint(255, dialogueOpacity);
+        image(buffer, 585, 229);
+        image(next, 1220, 430);
+        tint(255, 255);      
+      }
+
+
+      if(dialogueOpacity <= 255 && clickCounter < 2){
+        dialogueOpacity += 5;
+      }
+    }
+
+    if(clickCounter == 2){
+      if(dialogueOpacity > 0){
+        dialogueOpacity -= 5;
+      }
+    }
+    
+    if(clickCounter == 2 && dialogueOpacity == 0){
+      clickCounter++;
+    }
+    
+    if(clickCounter == 3){
+      tint(255, dialogueOpacity);
+      image(treechoice, 680, 230);
+      tint(255, 255);
+      
+      if(dialogueOpacity < 255){
+        dialogueOpacity += 5;
+      }
+    }
  
   } //end of stage 1
   
@@ -198,10 +245,19 @@ void mouseClicked(){
     clickCounter++;
   }
   
-  if(clickCounter >= 1){
+  if(stage1 && clickCounter <= 1 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 430 && mouseY <= 490)){
+    clickCounter++;
+  }
+  
+  if(stage0 && clickCounter >= 1){
     stage0 = false;
     stage1 = true;
     clickCounter = 0;
+    dialogueOpacity = 0;
+  }
+  
+  if(stage1 && clickCounter == 2){
+    
   }
   
 }
