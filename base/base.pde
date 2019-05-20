@@ -12,6 +12,7 @@ int clickCounter;
 // --- TIMER VARIABLES
 float lasttimecheck;
 float timeinterval;
+float parallax;
 
 // --- PLAYER NAME
 String playername;
@@ -64,6 +65,7 @@ void setup(){
   smooth(8);
   clickCounter = 0;
   dialogueOpacity = 0;
+  parallax = 1080;
   
   // --- LOAD ASSET IMAGES INTO VARIABLES
   truck = loadImage("truck.png");
@@ -136,9 +138,16 @@ void draw() {
   // --- DRAW BACKGROUND
   background(daysky);
   
+  translate(0, parallax);
   // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ZERO  ---!---!---!---!---!---!---!---!---!---!---!---!---! 0
   if(stage0){
     // GROUND & STATIC ASSETS
+    if(parallax <= 1080){
+       parallax -= 5;
+    }
+    
+    
+    
     image(ground3, -1, 590);
     image(ground2, -1, 880);
     image(cabin, 30, 570);
