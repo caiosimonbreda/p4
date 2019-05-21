@@ -64,6 +64,8 @@ PImage namebox;
 PImage start;
 PImage yourname;
 PImage coinbag;
+PImage eucalyptus1;
+
 PImage lesstimber;
 PImage pluscash;
 PImage balloon;
@@ -79,6 +81,8 @@ boolean cloudsGoUp = true;
 
 PImage cirrus;
 float cirrusX = 705;
+
+
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! SETUP  ---!---!---!---!---!---!---!---!---!---!---!---!---!
 void setup(){
@@ -112,6 +116,7 @@ void setup(){
   clouds = loadImage("clouds.png");
   cirrus = loadImage("cirrus.png");
   namesign = loadImage("namesign.png");
+  eucalyptus1 = loadImage("eucalyptus1.png");
   
   // --- CtrlP5 INITIALIZATION
   cp5 = new ControlP5(this);
@@ -194,6 +199,7 @@ void draw() {
   if(prestage){
      image(namebox, (width/2) - 205, (height/2) - 125);
      image(start, (width/2) - 82, (height/2) + 1);
+     image(yourname, (width/2 - 106), (height/2) - 180);
      
      tint(255, 150);
      image(cirrus, cirrusX , 0);
@@ -281,10 +287,17 @@ void draw() {
     image(cabin, 30, 570);
     image(townsign, 1700, 900);
     image(ground1, -1, 925);
+    image(namesign, 250, 740);
     
-    textFont(createFont("arial", 36));
+    textAlign(CENTER, CENTER);
+    playername = playername.toUpperCase();
+    fill(76, 48, 15);
+    textFont(createFont("mv boli", 28));
+    text(playername, 325, 770);
+    
     
     // WALLET
+    textFont(createFont("arial", 36));
     tint(255, dialogueOpacity);
     image(coinbag, 20, 20);
     fill(120, 80, 15, dialogueOpacity);
@@ -314,7 +327,7 @@ void draw() {
         tint(255, dialogueOpacity);
         image(buffer, 585, 229);
         image(next, 1220, 430);
-        tint(255, 255);      
+        tint(255, 255);
       }
 
 
@@ -366,7 +379,7 @@ void mouseClicked(){
   }
   
   if(stage1 && clickCounter == 2){
-    
+    //action
   }
   
 }
