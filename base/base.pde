@@ -224,7 +224,7 @@ void draw() {
   // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ZERO  ---!---!---!---!---!---!---!---!---!---!---!---!---! 0
   if(stage0){
     // GROUND & STATIC ASSETS
-    if(parallax > 0){
+    if(parallax > 35){
        parallax -= 10;
     }
     
@@ -278,6 +278,7 @@ void draw() {
   
   // ---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE ONE  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
   if(stage1){
+    translate(0, parallax);
     // GROUND & STATIC ASSETS
     tint(255, 160);
     image(clouds, width/2- 295 , cloudsY);
