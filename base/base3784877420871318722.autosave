@@ -358,9 +358,9 @@ void draw() {
     }
  
   } //end of stage 1
-
-  if (stage2) {
-    //Begin stage two
+  
+  if(stage2){
+    
   }
   
 }

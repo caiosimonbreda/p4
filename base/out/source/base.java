@@ -1,4 +1,22 @@
-import controlP5.*;
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import controlP5.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class base extends PApplet {
+
+
 
 // --- INITIALIZE CONTROLP5 VARIABLE FOR INITIAL FORM
 ControlP5 cp5;
@@ -32,16 +50,16 @@ Boolean stage7 = false;
 
 // --- ASSET VARIABLE DECLARATIONS AND THEIR RESPECTIVE PARAMETERS
 PImage truck;
-Float truckX = 830.0;
-Float truckY = 655.0;
-Float truckPace = 1.0;
+Float truckX = 830.0f;
+Float truckY = 655.0f;
+Float truckPace = 1.0f;
 Boolean truckGo = false;
 Boolean truckGone = false;
 
 
 PImage officer;
-Float officerX = 650.0;
-Float officerY = 1100.0;
+Float officerX = 650.0f;
+Float officerY = 1100.0f;
 Boolean officerCome = false;
 Boolean officerGo = false;
 
@@ -71,12 +89,12 @@ PImage pluscash;
 PImage balloon;
 float balloonX = 1600;
 float balloonY = 250;
-float balloonPace = 0.1;
+float balloonPace = 0.1f;
 
 PImage namesign;
 PImage clouds;
 float cloudsY = 630;
-float cloudsPace = 0.11;
+float cloudsPace = 0.11f;
 boolean cloudsGoUp = true;
 
 PImage cirrus;
@@ -85,9 +103,9 @@ float cirrusX = 705;
 
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! SETUP  ---!---!---!---!---!---!---!---!---!---!---!---!---!
-void setup(){
-  size(1920, 1080);
-  smooth(8);
+public void setup(){
+  
+  
   clickCounter = 0;
   dialogueOpacity = 0;
   parallax = 1080;
@@ -149,7 +167,7 @@ void setup(){
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---! SAVE PLAYER NAME ---!---!---!---!---!---!---!---!---!---!---!
 
-void SavePlayerName(){
+public void SavePlayerName(){
 
   String namebuffer = cp5.get(Textfield.class, "nameinput").getText();
   
@@ -176,7 +194,7 @@ void SavePlayerName(){
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! DRAW  ---!---!---!---!---!---!---!---!---!---!---!---!---!
 
-void draw() {
+public void draw() {
   // --- DRAW BACKGROUND
   background(daysky);
   
@@ -210,11 +228,11 @@ void draw() {
      if(balloonX <= 1920 || balloonY > 0){
        balloonX += balloonPace;
        balloonY -= balloonPace;
-       balloonPace = balloonPace * 1.01;
+       balloonPace = balloonPace * 1.01f;
      }
      
      if(cirrusX > -400){
-        cirrusX -= 0.3;
+        cirrusX -= 0.3f;
      }
      
   }
@@ -358,15 +376,11 @@ void draw() {
     }
  
   } //end of stage 1
-
-  if (stage2) {
-    //Begin stage two
-  }
   
 }
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---!---!---! MOUSE CLICKED  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
-void mouseClicked(){
+public void mouseClicked(){
   
   if(stage0 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 430 && mouseY <= 490)){
     clickCounter++;
@@ -387,4 +401,14 @@ void mouseClicked(){
     //action
   }
   
+}
+  public void settings() {  size(1920, 1080);  smooth(8); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "base" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
