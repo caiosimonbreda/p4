@@ -376,6 +376,10 @@ public void draw() {
     }
  
   } //end of stage 1
+
+  if (stage2) {
+    //Begin stage two
+  }
   
 }
 
@@ -398,13 +402,13 @@ public void mouseClicked(){
   }
   
   if(stage1 && clickCounter == 2){
-    //action
+    //draw trees
   }
   
 }
   public void settings() {  size(1920, 1080);  smooth(8); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "base" };
+    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--hide-stop", "base" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

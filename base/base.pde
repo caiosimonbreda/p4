@@ -30,6 +30,9 @@ Boolean stage5 = false;
 Boolean stage6 = false;
 Boolean stage7 = false;
 
+// --- CHOICE VARIABLES
+boolean treeChoice = false;
+
 // --- ASSET VARIABLE DECLARATIONS AND THEIR RESPECTIVE PARAMETERS
 PImage truck;
 Float truckX = 830.0;
@@ -46,7 +49,7 @@ Boolean officerCome = false;
 Boolean officerGo = false;
 
 PImage daysky;
-PImage ground1, ground2, ground3;
+PImage ground1, ground2, ground3, nostumps1, nostumps2;
 PImage cabin;
 PImage townsign;
 PImage next;
@@ -57,8 +60,17 @@ PImage next;
 int dialogueOpacity;
 PImage buffer;
 PImage backstory;
-PImage dial1;
-PImage dial2;
+PImage dial1; //FOfficer
+PImage dial2; //FOfficer
+PImage dial3; //FOfficer
+PImage dial4; //FOfficer
+PImage dial5; //Neighbours
+PImage dial6;
+PImage dial7;
+PImage dial8;
+PImage dial9;
+PImage dial10;
+PImage dial11;
 PImage treechoice;
 PImage namebox;
 PImage start;
@@ -66,8 +78,15 @@ PImage yourname;
 PImage coinbag;
 PImage eucalyptus1;
 
+float fadeToBlack;
+
 PImage lesstimber;
 PImage pluscash;
+PImage neighbours;
+float neighboursY = 1100.0;
+boolean neighboursCome = false;
+
+
 PImage balloon;
 float balloonX = 1600;
 float balloonY = 250;
@@ -91,6 +110,7 @@ void setup(){
   clickCounter = 0;
   dialogueOpacity = 0;
   parallax = 1080;
+  fadeToBlack = 0;
   
   // --- LOAD ASSET IMAGES INTO VARIABLES
   truck = loadImage("truck.png");
@@ -117,6 +137,12 @@ void setup(){
   cirrus = loadImage("cirrus.png");
   namesign = loadImage("namesign.png");
   eucalyptus1 = loadImage("eucalyptus1.png");
+  nostumps1 = loadImage("nostumps1.png");
+  nostumps2 = loadImage("nostumps2.png");
+  dial3 = loadImage("ifeuc.png");
+  dial4 = loadImage("ifmix.png");
+  neighbours = loadImage("neighbours.png");
+  dial5 = loadImage("neighbourtalk.png");
   
   // --- CtrlP5 INITIALIZATION
   cp5 = new ControlP5(this);
@@ -147,7 +173,7 @@ void setup(){
 
 
 
-// ---!---!---!---!---!---!---!---!---!---!---!---!---! SAVE PLAYER NAME ---!---!---!---!---!---!---!---!---!---!---!
+ //---!---!---!---!---!---!---!---!---!---!---!---!---! SAVE PLAYER NAME ---!---!---!---!---!---!---!---!---!---!---!
 
 void SavePlayerName(){
 
@@ -356,23 +382,140 @@ void draw() {
         dialogueOpacity += 5;
       }
     }
- 
-  } //end of stage 1
-
+    
+    if(clickCounter == 4){
+      if(treeChoice){
+        buffer  = dial3;
+      } else {
+        buffer = dial4;
+      }
+      
+      tint(255, dialogueOpacity);
+      image(buffer, 585, 315);
+      image(next, 1220, 430);
+      tint(255, 255);
+      
+      if(dialogueOpacity < 255){
+        dialogueOpacity += 5;
+      }
+    }
+    
+    if(clickCounter == 5){
+      fill(0, 0, 0, fadeToBlack);
+      rect(0, -35, 1920, 1080);
+      
+      if(fadeToBlack < 255){
+        fadeToBlack +=5; 
+      }
+      
+      if(fadeToBlack == 255){
+        clickCounter = 0;
+        lasttimecheck = millis();
+        stage1 = false;
+        stage2 = true;
+      }
+      
+    }
+    
+  } //end of stage 1  --- FADE TO BLACK?
+  
+  // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE TWO  ---!---!---!---!---!---!---!---!---!---!---!---!---! 2
   if (stage2) {
-    //Begin stage two
-  }
+    
+    fill(0, 0, 0, fadeToBlack);
+    rect(0, -35, 1920, 1080);
+    
+    if(fadeToBlack > 0){
+      fadeToBlack -= 5;
+    }
+    
+    translate(0, parallax);
+    // GROUND & STATIC ASSETS
+    tint(255, 160);
+    image(clouds, width/2- 295 , cloudsY);
+    tint(255, 255);
+    image(ground3, -1, 590); //mountain
+    image(nostumps2, -1, 910);
+    image(cabin, 30, 570);
+    image(townsign, 1700, 900);
+    
+    //TREES
+    if(treeChoice){
+      image(eucalyptus1, 2, 800);
+    } else {
+      image(eucalyptus1, 2, 825);
+    }
+    
+    image(nostumps1, -1, 987);
+    image(namesign, 250, 740);
+    
+    textAlign(CENTER, CENTER);
+    playername = playername.toUpperCase();
+    fill(76, 48, 15);
+    textFont(createFont("mv boli", 28));
+    text(playername, 325, 770);
+    
+    
+    // WALLET
+    textFont(createFont("arial", 36));
+    tint(255, dialogueOpacity);
+    image(coinbag, 20, 20);
+    fill(120, 80, 15, dialogueOpacity);
+    text(wallet, 172, 72);
+    fill(252, 212, 50, dialogueOpacity);
+    text(wallet, 170, 70);
+    tint(255, 255);  
+    
+    // --- EXCLUSIVES
+    neighbours.resize(230, 205);
+    
+    if(millis() > lasttimecheck + 3000){
+      neighboursCome = true;
+    }
+    if(neighboursCome && neighboursY > 815){
+      neighboursY -= 5;
+    }
+    image(neighbours, 780, neighboursY);
+    
+    if(millis() > lasttimecheck + 4000){
+      //PLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUE
+    }
+    
+    
+    
+
+  } //End of stage 2
+
+  if (stage3) {
+    //Begin stage 3
+  } //End of stage 3
+  
+  if (stage4) {
+    //Begin stage 4
+  } //End of stage 4
+
+  if (stage5) {
+    //Begin stage 5
+  } //End of stage 5
+
+  if (stage6) {
+    //Begin stage 6
+  } //End of stage 6
+
+  if (stage7) {
+    //Begin stage 7
+  } //End of stage 7
   
 }
 
 // ---!---!---!---!---!---!---!---!---!---!---!---!---!---!---!---! MOUSE CLICKED  ---!---!---!---!---!---!---!---!---!---!---!---!---! 1
 void mouseClicked(){
   
-  if(stage0 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 430 && mouseY <= 490)){
+  if(stage0 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 465 && mouseY <= 525)){
     clickCounter++;
   }
   
-  if(stage1 && clickCounter <= 1 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 430 && mouseY <= 490)){
+  if(stage1 && clickCounter <= 1 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 465 && mouseY <= 525)){
     clickCounter++;
   }
   
@@ -383,8 +526,18 @@ void mouseClicked(){
     dialogueOpacity = 0;
   }
   
-  if(stage1 && clickCounter == 2){
-    //action
+  if(stage1 && clickCounter == 3 && (mouseX > 735 && mouseX < 1009) && (mouseY > 278 && mouseY < 428)){
+    treeChoice = false; //Eucaliptos
+    clickCounter++;
+  }
+
+  if(stage1 && clickCounter == 3 && (mouseX > 1008 && mouseX < 1218) && (mouseY > 278 && mouseY < 428)){
+    treeChoice = true; //Mistura
+    clickCounter++;
+  }
+  
+  if(stage1 && clickCounter == 4 && ((mouseX > 735 && mouseX < 1009) && (mouseY > 278 && mouseY < 428))){
+    clickCounter++;
   }
   
 }
