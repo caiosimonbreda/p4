@@ -65,18 +65,32 @@ PImage dial2; //FOfficer
 PImage dial3; //FOfficer
 PImage dial4; //FOfficer
 PImage dial5; //Neighbours
-PImage dial6;
-PImage dial7;
-PImage dial8;
-PImage dial9;
-PImage dial10;
+PImage dial6; //Granny
+PImage dial7; //Granny
+PImage dial8; //Granny
+PImage dial9; //Granny
+PImage dial10; 
 PImage dial11;
+PImage dial12;
+PImage dial13;
+PImage dial14;
+PImage dial15;
+PImage dial16;
 PImage treechoice;
 PImage namebox;
 PImage start;
 PImage yourname;
 PImage coinbag;
 PImage eucalyptus1;
+PImage mix1;
+PImage eucalyptus2_1;
+PImage eucalyptus2_2;
+PImage eucalyptus3_1;
+PImage eucalyptus3_2;
+PImage mix2_1;
+PImage mix2_2;
+PImage mix3_1;
+PImage mix3_2;
 
 float fadeToBlack;
 
@@ -85,6 +99,10 @@ PImage pluscash;
 PImage neighbours;
 float neighboursY = 1100.0;
 boolean neighboursCome = false;
+
+PImage granny;
+float grannyY = 1100.0;
+boolean grannyCome = false;
 
 
 PImage balloon;
@@ -143,7 +161,21 @@ void setup(){
   dial4 = loadImage("ifmix.png");
   neighbours = loadImage("neighbours.png");
   dial5 = loadImage("neighbourtalk.png");
-  
+  mix1 = loadImage("mix1.png");
+  eucalyptus2_1 = loadImage("eucalyptus2_1.png");
+  eucalyptus2_2 = loadImage("eucalyptus2_2.png");
+  eucalyptus3_1 = loadImage("eucalyptus_3_1.png");
+  eucalyptus3_2 = loadImage("eucalyptus_3_2.png");
+  mix2_1 = loadImage("mix2_1.png");
+  mix2_2 = loadImage("mix2_2.png");
+  mix3_1 = loadImage("mix_3_1.png");
+  mix3_2 = loadImage("mix_3_2.png");
+  granny = loadImage("granny.png");
+  dial6 = loadImage("ladyeuc_1.png");
+  dial7 = loadImage("ladyeuc_2.png");
+  dial8 = loadImage("ladymix_1.png");
+  dial9 = loadImage("ladymix_2.png");
+    
   // --- CtrlP5 INITIALIZATION
   cp5 = new ControlP5(this);
   
@@ -159,7 +191,7 @@ void setup(){
   .setFont(createFont("comic sans ms",28))
   .setCaptionLabel("")
   .setColor(color(0));
-  
+ 
   // --- START BUTTON PARAMETERS
   cp5
   .setColorActive(color(255, 1))
@@ -413,6 +445,7 @@ void draw() {
         lasttimecheck = millis();
         stage1 = false;
         stage2 = true;
+        dialogueOpacity = 0;
       }
       
     }
@@ -421,13 +454,6 @@ void draw() {
   
   // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE TWO  ---!---!---!---!---!---!---!---!---!---!---!---!---! 2
   if (stage2) {
-    
-    fill(0, 0, 0, fadeToBlack);
-    rect(0, -35, 1920, 1080);
-    
-    if(fadeToBlack > 0){
-      fadeToBlack -= 5;
-    }
     
     translate(0, parallax);
     // GROUND & STATIC ASSETS
@@ -441,7 +467,7 @@ void draw() {
     
     //TREES
     if(treeChoice){
-      image(eucalyptus1, 2, 800);
+      image(mix1, 2, 825);
     } else {
       image(eucalyptus1, 2, 825);
     }
@@ -464,34 +490,308 @@ void draw() {
     text(wallet, 172, 72);
     fill(252, 212, 50, dialogueOpacity);
     text(wallet, 170, 70);
-    tint(255, 255);  
+    tint(255, 255);
     
     // --- EXCLUSIVES
     neighbours.resize(230, 205);
     
-    if(millis() > lasttimecheck + 3000){
+    if(clickCounter == 0){
+      fill(0, 0, 0, fadeToBlack);
+      rect(0, -35, 1920, 1080);
+    
+      if(fadeToBlack > 0){
+        fadeToBlack -= 5;
+      }
+    }
+    
+    if(clickCounter == 0 && millis() > lasttimecheck + 3000){
       neighboursCome = true;
     }
-    if(neighboursCome && neighboursY > 815){
-      neighboursY -= 5;
+    if(clickCounter == 0 && neighboursCome && neighboursY > 815){
+      neighboursY -= 10;
     }
     image(neighbours, 780, neighboursY);
     
-    if(millis() > lasttimecheck + 4000){
-      //PLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUEPLACE DIALOGUE
+    if(clickCounter == 0 && (millis() > lasttimecheck + 4000)){
+      tint(255, dialogueOpacity);
+      image(dial5, 585, 229);
+      image(next, 1220, 430);
+      tint(255, 255);
+      
+      if(dialogueOpacity < 255){
+        dialogueOpacity += 5;
+      }
     }
     
+    if(clickCounter == 1){
+      tint(255, dialogueOpacity);
+      image(dial5, 585, 229);
+      image(next, 1220, 430);
+      
+      if(dialogueOpacity > 0){
+         dialogueOpacity -= 5;
+      }
+      
+      if(neighboursY < 1100){
+        neighboursY += 10;
+      }
+      
+      if(dialogueOpacity <= 5){
+         clickCounter++;
+         fadeToBlack = 0;
+      }
+    }
     
+    print(clickCounter + "\n");
+    print(fadeToBlack + "\n");
     
-
+    if(clickCounter == 2){
+      //TAKE CARE OF THE PLANTS HERE
+      //print("FELLAS WE'RE IN");
+      //fade to black
+      if(fadeToBlack < 255.0){
+        fadeToBlack += 5.0;
+      }
+      
+      fill(0, 0, 0, fadeToBlack);
+      rect(0, -35, 1920, 1080);
+            
+      if(fadeToBlack == 255){
+        dialogueOpacity = 0;
+        lasttimecheck = millis();
+        stage2 = false;
+        stage3 = true;
+        clickCounter = 0;
+      }
+    }
   } //End of stage 2
 
+  // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE THREE  ---!---!---!---!---!---!---!---!---!---!---!---!---! 3
   if (stage3) {
-    //Begin stage 3
+    translate(0, parallax);
+    
+    // GROUND & STATIC ASSETS
+    tint(255, 160);
+    image(clouds, width/2- 295 , cloudsY);
+    tint(255, 255);
+    image(ground3, -1, 590); //mountain
+    //TREES BACK
+    if(treeChoice){
+      image(mix2_2, 480, 680);
+    } else {
+      image(eucalyptus2_2, 480, 680);
+    }
+    image(nostumps2, -1, 910);
+    //TREES FRONT
+    if(treeChoice){
+      image(mix2_1, -20, 170);
+    } else {
+      image(eucalyptus2_1, -20, 170);
+    }
+    image(cabin, 30, 570);
+    image(townsign, 1700, 900);
+    image(nostumps1, -1, 987);
+    image(namesign, 250, 740);
+    
+    textAlign(CENTER, CENTER);
+    playername = playername.toUpperCase();
+    fill(76, 48, 15);
+    textFont(createFont("mv boli", 28));
+    text(playername, 325, 770);
+    
+    
+    // WALLET
+    textFont(createFont("arial", 36));
+    tint(255, dialogueOpacity);
+    image(coinbag, 20, 20);
+    fill(120, 80, 15, dialogueOpacity);
+    text(wallet, 172, 72);
+    fill(252, 212, 50, dialogueOpacity);
+    text(wallet, 170, 70);
+    tint(255, 255);  
+    
+    //FADE
+    if(clickCounter == 0){
+      fill(0, 0, 0, fadeToBlack);
+      rect(0, -35, 1920, 1080);
+    
+      if(fadeToBlack > 0){
+        fadeToBlack -= 5;
+      }
+    }
+    
+    // --- EXCLUSIVES
+    
+    granny.resize(140, 215);
+    
+    if(clickCounter == 0 && millis() > lasttimecheck + 3000){
+      grannyCome = true;
+    }
+    if(clickCounter == 0 && grannyCome && grannyY > 815){
+      grannyY -= 10;
+    }
+    image(granny, 780, grannyY);
+    
+
+
+    if(clickCounter == 0 && (millis() > lasttimecheck + 4000)){
+      
+      tint(255, dialogueOpacity);
+      if(treeChoice){
+        image(dial6, 585, 320);
+      }
+      else {
+        image(dial8, 585, 320);
+      }
+      image(next, 1220, 430);
+      tint(255, 255);
+      
+      if(dialogueOpacity < 255){
+        dialogueOpacity += 5;
+      } 
+    }
+    
+    if(clickCounter == 1){
+      tint(255, dialogueOpacity);
+      if(treeChoice){
+        image(dial6, 585, 320);
+      }
+      else {
+        image(dial8, 585, 320);
+      }
+      image(next, 1220, 430);
+      
+      if(dialogueOpacity > 0){
+         dialogueOpacity -= 5;
+      }
+      
+      if(dialogueOpacity == 0){
+         clickCounter++;
+      }
+    }
+    
+    if(clickCounter == 2){
+      
+      tint(255, dialogueOpacity);
+      if(treeChoice){
+        image(dial7, 585, 320);
+      }
+      else {
+        image(dial9, 585, 320);
+      }
+      image(next, 1220, 430);
+      tint(255, 255);
+      
+      if(dialogueOpacity < 255){
+        dialogueOpacity += 5;
+      } 
+    }
+    
+    if(clickCounter == 3){
+       tint(255, dialogueOpacity);
+      if(treeChoice){
+        image(dial7, 585, 320);
+      }
+      else {
+        image(dial9, 585, 320);
+      }
+      image(next, 1220, 430);
+      tint(255, 255);
+      
+      if(dialogueOpacity > 0){
+         dialogueOpacity -= 5;
+      }
+      
+      if(dialogueOpacity == 0){
+         clickCounter++;
+      } 
+    }
+    
+    if(clickCounter == 4){
+      if(fadeToBlack < 255.0){
+        fadeToBlack += 5.0;
+      }
+      
+      fill(0, 0, 0, fadeToBlack);
+      rect(0, -35, 1920, 1080);
+      
+      if(fadeToBlack == 255){
+        dialogueOpacity = 0;
+        lasttimecheck = millis();
+        stage3 = false;
+        stage4 = true;
+        clickCounter = 0;
+      }
+    }
+    
+
+
+
+    
+    
+    
   } //End of stage 3
   
+  // ---!---!---!---!---!---!---!---!---!---!---!---!---!---! STAGE FOUR  ---!---!---!---!---!---!---!---!---!---!---!---!---! 4
   if (stage4) {
-    //Begin stage 4
+    translate(0, parallax);
+    
+    // GROUND & STATIC ASSETS
+    tint(255, 160);
+    image(clouds, width/2- 295 , cloudsY);
+    tint(255, 255);
+    image(ground3, -1, 590); //mountain
+    //TREES BACK
+    if(treeChoice){
+      image(mix3_2, 480, 520);
+    } else {
+      image(eucalyptus3_2, 480, 520);
+    }
+    image(nostumps2, -1, 910);
+    //TREES FRONT
+    if(treeChoice){
+      image(mix3_1, -20, 10);
+    } else {
+      image(eucalyptus3_1, -20, 10);
+    }
+    image(cabin, 30, 570);
+    image(townsign, 1700, 900);    
+    image(nostumps1, -1, 987);
+    image(namesign, 250, 740);
+    
+    textAlign(CENTER, CENTER);
+    playername = playername.toUpperCase();
+    fill(76, 48, 15);
+    textFont(createFont("mv boli", 28));
+    text(playername, 325, 770);
+    
+    
+    // WALLET
+    textFont(createFont("arial", 36));
+    tint(255, dialogueOpacity);
+    image(coinbag, 20, 20);
+    fill(120, 80, 15, dialogueOpacity);
+    text(wallet, 172, 72);
+    fill(252, 212, 50, dialogueOpacity);
+    text(wallet, 170, 70);
+    tint(255, 255);  
+    
+    //FADE
+    if(clickCounter == 0){
+      fill(0, 0, 0, fadeToBlack);
+      rect(0, -35, 1920, 1080);
+    
+      if(fadeToBlack > 0){
+        fadeToBlack -= 5;
+      }
+    }
+    
+    // --- EXCLUSIVES
+
+    
+    
+    
+    
   } //End of stage 4
 
   if (stage5) {
@@ -526,6 +826,8 @@ void mouseClicked(){
     dialogueOpacity = 0;
   }
   
+  // STAGE ONE 1
+  
   if(stage1 && clickCounter == 3 && (mouseX > 735 && mouseX < 1009) && (mouseY > 278 && mouseY < 428)){
     treeChoice = false; //Eucaliptos
     clickCounter++;
@@ -536,8 +838,25 @@ void mouseClicked(){
     clickCounter++;
   }
   
-  if(stage1 && clickCounter == 4 && ((mouseX > 735 && mouseX < 1009) && (mouseY > 278 && mouseY < 428))){
+  if(stage1 && clickCounter == 4 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 465 && mouseY <= 525)){
     clickCounter++;
   }
+  
+  // STAGE TWO 2
+  
+  if(stage2 && clickCounter == 0 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 465 && mouseY <= 525)){
+    clickCounter++;
+  }
+  
+  // STAGE THREE 3
+  
+  if(stage3 && clickCounter == 0 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 465 && mouseY <= 525)){
+     clickCounter++;
+  }
+  
+  if(stage3 && clickCounter == 2 && (mouseX >= 1220 && mouseX <= 1286 && mouseY >= 465 && mouseY <= 525)){
+     clickCounter++;
+  }
+  
   
 }
